@@ -14,20 +14,20 @@ def load_and_train_model():
     col_names = [f'cell_{i}' for i in range(42)] + ['outcome']
     df = pd.read_csv('data/connect-4.data', names=col_names)
 
-    # Map: x=1 (first player), o=2 (second), b=0 (blank)
+ 
     df = df.replace({'x': 1, 'o': 2, 'b': 0}).infer_objects(copy=False)
 
     X = []
     y = []
 
     for _, row in df.iterrows():
-        board_flat = row[:-1].tolist()  # 42 board cells
+        board_flat = row[:-1].tolist()  
         for col in range(COLUMNS):
             for row_i in reversed(range(ROWS)):
                 index = row_i * COLUMNS + col
-                if board_flat[index] == 1:  # first 'x' move
+                if board_flat[index] == 1:  
                     X.append(board_flat)
-                    y.append(col)  # column where 'x' placed the disc
+                    y.append(col)  
                     break
             else:
                 continue
@@ -67,7 +67,7 @@ def get_move(board, agent_disc='●', opponent_disc='○'):
     if is_valid_move(board, predicted_col):
         return predicted_col
     else:
-        # Fallback: choose first valid column if prediction is blocked
+        #choose first valid column if prediction is blocked
         for col in range(COLUMNS):
             if is_valid_move(board, col):
                 return col
